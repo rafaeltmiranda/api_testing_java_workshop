@@ -36,7 +36,7 @@ public class TestingController extends BaseController {
             @PathVariable(value = "serviceName") ApiServiceAggregator serviceName,
             @RequestParam(value = "testName", required = false) String testName,
             @RequestParam(value = "tag", required = false) ApiService tag,
-            @RequestParam(value = "slackNotification", required = false, defaultValue = "true") Boolean slackNotification) {
+            @RequestParam(value = "slackNotification", required = false, defaultValue = "false") Boolean slackNotification) {
 
         LOGGER.info("Running " + serviceName.name() + " tests...");
 
