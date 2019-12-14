@@ -55,8 +55,6 @@ public class ReportService {
 
     public void messageAlert(String endpoint, String message) {
         try {
-            LOGGER.info("Slack alerts are enabled: {}", testingProperties.getSlack().getActive());
-
             if (testingProperties.getSlack().getActive()) {
                 LOGGER.info("Sending alert message for slack channel {} and webhook {}.",
                         testingProperties.getSlack().getChannel(), testingProperties.getSlack().getWebhook());

@@ -34,26 +34,17 @@ public class TestingController extends BaseController {
     @ApiOperation(value = "Testing Endpoint", response = Report.class)
     public CompletableFuture<ResponseEntity<Object>> runTests(
             @PathVariable(value = "serviceName") ApiServiceAggregator serviceName,
-            @RequestParam(value = "testName", required = false) String testName,
-            @RequestParam(value = "tag", required = false) ApiService tag,
-            @RequestParam(value = "slackNotification", required = false, defaultValue = "false") Boolean slackNotification) {
+            @RequestParam(value = "testName", required = false) String testName) {
 
         LOGGER.info("Running " + serviceName.name() + " tests...");
 
         List<Result> results = new ArrayList<>();
 
-        testingService.getReportService().getSlack().setActive(slackNotification);
-
-        if (nonNull(tag)) {
-            results.addAll(this.testingService.runServiceTest(testName, tag));
+        if (serviceName.equals(ApiServiceAggregator.all)) {
+            results = this.testingService.runAllTests();
         } else {
-
-            if (serviceName.equals(ApiServiceAggregator.all)) {
-                results = this.testingService.runAllTests();
-            } else {
-                for (ApiService apiService : serviceName.getTests()) {
-                    results.addAll(this.testingService.runServiceTest(testName, apiService));
-                }
+            for (ApiService apiService : serviceName.getTests()) {
+                results.addAll(this.testingService.runServiceTest(testName, apiService));
             }
         }
 
