@@ -30,25 +30,52 @@ public class EmelGiraStationTestingService implements ServiceTest {
     @ApiWorkshopTest
     public void testSkippedExample() {
         try {
-            throw new ApiTestingException("Skipped test - Skipping test by example");
+            throw new ApiTestingException("Skipped test - Rafael Miranda");
+        } catch (Exception e) {
+            throw new ApiTestingException(e);
+        }
+    }
+//
+//    @ApiWorkshopTest
+//    public void testPassedExample() {
+//        try {
+//            assertThat(1).isEqualTo(1);
+//        } catch (Exception e) {
+//            throw new ApiTestingException(e);
+//        }
+//    }
+//
+//    @ApiWorkshopTest
+//    public void invalidTestExample() {
+//        try {
+//            assertThat(1).isEqualTo(2);
+//        } catch (Exception e) {
+//            throw new ApiTestingException(e);
+//        }
+//    }
+
+    @ApiWorkshopTest
+    public void getStationList_shouldReturn200() {
+        try {
+            StationList stationList = emelGiraStationApi.getStationUsingGET(API_KEY);
+
+            assertThat(stationList.getTotalFeatures())
+                    .isEqualTo(stationList.getFeatures().size());
         } catch (Exception e) {
             throw new ApiTestingException(e);
         }
     }
 
     @ApiWorkshopTest
-    public void testPassedExample() {
+    public void getStationList_invalidApiKey_shouldReturn401() {
         try {
-            assertThat(1).isEqualTo(1);
-        } catch (Exception e) {
-            throw new ApiTestingException(e);
-        }
-    }
-
-    @ApiWorkshopTest
-    public void invalidTestExample() {
-        try {
-            assertThat(1).isEqualTo(2);
+            emelGiraStationApi.getStationUsingGET("asdasdasd");
+            throw new ApiTestingException("Should return an exception due invalid api key");
+        } catch (HttpStatusCodeException e) {
+            assertThat(e.getStatusCode())
+                    .isEqualTo(HttpStatus.UNAUTHORIZED);
+            assertThat(e.getResponseBodyAsString())
+                    .isEqualTo("Unauthorized");
         } catch (Exception e) {
             throw new ApiTestingException(e);
         }
