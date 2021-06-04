@@ -31,7 +31,7 @@
         <json.version>20190722</json.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <assertj-core.version>3.13.2</assertj-core.version>
-        <httpclient.version>4.5.10</httpclient.version>
+        <httpclient.version>4.5.13</httpclient.version>
         <jslack.version>1.0.20</jslack.version>
     </properties>
     <dependencies>
